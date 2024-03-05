@@ -88,7 +88,7 @@ public class LanguageModel {
     }
 
 
-	}
+	
 
     // Returns a random character from the given probabilities list.
 	public char getRandomChar(List probs) {
