@@ -32,44 +32,32 @@ public class LanguageModel {
     }
 
     /** Builds a language model from the text in the given file (the corpus). */
-	public void train(String fileName) {
+    public void train(String fileName) {
+        // Your code goes here
         String window = "";
         char c;
         In in = new In(fileName);
-        // Reads just enough characters to form the first window
-        for ( int i = 0; i < windowLength; i++)
-        {
-            window += in.readChar(); 
+
+        for (int i = 0; i < windowLength; i++) {
+            window += in.readChar();
+            ;
         }
-        // Processes the entire text, one character at a time
-     while (!in.isEmpty()) {
-        List probs = null;
-        // Gets the next character
-        c = in.readChar();
-        // Checks if the window is already in the map
-        if (CharDataMap.containsKey(window))
-        {
-            probs = CharDataMap.get(window);
+
+        while (!in.isEmpty()) {
+            c = in.readChar();
+            List probs = CharDataMap.get(window);
+            if (probs == null) {
+                probs = new List();
+                CharDataMap.put(window, probs);
+            }
+            probs.update(c);
+            window = window.substring(1) + c;
         }
-        // If the window was not found in the map
-        else
-        {
-             // Creates a new empty list, and adds (window,list) to the map
-         CharDataMap.put(window, probs); 
+
+        for (List probs : CharDataMap.values()) {
+            calculateProbabilities(probs);
         }
-        // Calculates the counts of the current character.
-        probs.update(c);
-        // Advances the window: adds c to the window’s end, and deletes the
-        // window's first character.
-        window += c;
-        window.substring(1);
-        }
-        // The entire file has been processed, and all the characters have been counted.
-        // Proceeds to compute and set the p and cp fields of all the CharData objects
-        // in each linked list in the map.
-        for (List probs : CharDataMap.values())
-        calculateProbabilities(probs);
-        }
+    }
 
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
@@ -119,15 +107,27 @@ public class LanguageModel {
 	 * @param numberOfLetters - the size of text to generate
 	 * @return the generated text
 	 */
-	public String generate(String initialText, int textLength) {
-		if (initialText.length() >= windowLength) {
-            for (int i = 0; i < textLength; i++) {
-                initialText += getRandomChar(
-             CharDataMap.get(initialText.substring(initialText.length() - windowLength)));
+    public String generate(String initialText, int textLength) {
+        // Your code goes here
+        if (initialText.length() < windowLength) {
+            return initialText;
+        }
+
+        String window = initialText.substring(initialText.length() - windowLength);
+        String res = initialText;
+        List probs = new List();
+
+        while (res.length() - initialText.length() != textLength) {
+            probs = CharDataMap.get(window);
+            if (probs == null) {
+                return res;
+            } else {
+                res += getRandomChar(probs);
+                window = res.substring(res.length() - windowLength);
             }
         }
-        return initialText;
-	}
+        return res;
+    }
 
     /** Returns a string representing the map of this language model. */
 	public String toString() {
