@@ -117,7 +117,7 @@ public class List {
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
         Node current = first;
-        if (index >= 0 && index < size) 
+        if (index > 0 && index <= size) 
         {
             for (int i = 0; i < index; i++)
              {
