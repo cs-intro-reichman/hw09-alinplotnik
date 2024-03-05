@@ -117,15 +117,11 @@ public class List {
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
         // Your code goes here
-        Node current = first;
-        if (index >= 0 && index < size) {
-            for (int i = 0; i < index; i++) {
-                current = current.next;
-            }
-            return current.cp;
-        } else {
-            throw new IndexOutOfBoundsException();
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException("illegal index " + index);
         }
+        CharData[] list = toArray();
+        return list[index];
     }
 
 
