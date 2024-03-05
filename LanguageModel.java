@@ -83,8 +83,8 @@ public class LanguageModel {
         for (int i = 0; i < probs.getSize() ; i++)
         {
           probs.get(i).p = probs.get(i).count / totalChars;
-          totalPs += probs.get(i).p;
-          probs.get(i).cp = totalPs;
+          probs.get(i).cp = totalPs + probs.get(i).p;
+          totalPs = probs.get(i).cp;
         }
 
 
