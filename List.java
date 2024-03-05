@@ -41,7 +41,7 @@ public class List {
         String str = "";
         while (current != null)
         {
-           str += current.cp.toString() + " ";
+           str += current.cp.toString();
            current = current.next;
         }
         return str;
