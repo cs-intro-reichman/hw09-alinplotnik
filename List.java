@@ -119,7 +119,7 @@ public class List {
         Node current = first;
         if (index > 0 && index <= size) 
         {
-            for (int i = 0; i < index; i++)
+            for (int i = 0; i <= index; i++)
              {
                 current = current.next;
              }
