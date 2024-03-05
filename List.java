@@ -116,22 +116,17 @@ public class List {
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
         Node current = first;
-        int count = 0;
-
-        while (current != null)
+        if (index >= 0 && index < size) 
         {
-            if (count == index)
-            {
-                return current.cp;
-            }
-            current = current.next;
-            count++;
+            for (int i = 0; i < index; i++)
+             {
+                current = current.next;
+             }
+            return current.cp;
+        } else {
+            throw new IndexOutOfBoundsException();
         }
-        throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
