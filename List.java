@@ -116,18 +116,18 @@ public class List {
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
+        // Your code goes here
         Node current = first;
-        if (index > 0 && index <= size) 
-        {
-            for (int i = 0; i <= index; i++)
-             {
+        if (index >= 0 && index < size) {
+            for (int i = 0; i < index; i++) {
                 current = current.next;
-             }
+            }
             return current.cp;
         } else {
             throw new IndexOutOfBoundsException();
         }
     }
+
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
     public CharData[] toArray() {
